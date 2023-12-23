@@ -1,0 +1,64 @@
+[{
+  "_id": {
+    "$oid": "6579f87da440d644829f1bbc"
+  },
+  "user": {
+    "$oid": "6573350b195aed787e7dd859"
+  },
+  "shippingInfo": {
+    "firstname": "das",
+    "lastname": "asd",
+    "address": "asd",
+    "city": "da",
+    "state": "state1",
+    "other": "asd",
+    "pincode": 123214
+  },
+  "orderItems": [
+    {
+      "product": {
+        "$oid": "65736cabc5fc190978be1e49"
+      },
+      "color": {
+        "$oid": "655a36931b11bbd7dae1d0bb"
+      },
+      "quantity": 6,
+      "price": 122,
+      "_id": {
+        "$oid": "6579f87da440d644829f1bbd"
+      }
+    },
+    {
+      "product": {
+        "$oid": "65736ceac5fc190978be1e4f"
+      },
+      "color": {
+        "$oid": "655a36931b11bbd7dae1d0bb"
+      },
+      "quantity": 1,
+      "price": 312,
+      "_id": {
+        "$oid": "6579f87da440d644829f1bbe"
+      }
+    }
+  ],
+  "payAt": {
+    "$date": {
+      "$numberLong": "1702490413755"
+    }
+  },
+  "totalPrice": 1044,
+  "totalPriceAfterDiscount": 1044,
+  "orderStatus": "Comfirming",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1702492285148"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1702492285148"
+    }
+  },
+  "__v": 0
+}]

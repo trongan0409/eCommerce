@@ -1,0 +1,53 @@
+[{
+  "_id": {
+    "$oid": "6573b0923c2052fd54912fbe"
+  },
+  "userId": {
+    "$oid": "6573350b195aed787e7dd859"
+  },
+  "productId": {
+    "$oid": "65736cabc5fc190978be1e49"
+  },
+  "quantity": 6,
+  "price": 122,
+  "color": {
+    "$oid": "655a36931b11bbd7dae1d0bb"
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1702080658303"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1702086088942"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6573cd6c67bc4de1bc2f7da8"
+  },
+  "userId": {
+    "$oid": "6573350b195aed787e7dd859"
+  },
+  "productId": {
+    "$oid": "65736ceac5fc190978be1e4f"
+  },
+  "quantity": 1,
+  "price": 312,
+  "color": {
+    "$oid": "655a36931b11bbd7dae1d0bb"
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1702088044739"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1702088044739"
+    }
+  },
+  "__v": 0
+}]

@@ -1,0 +1,191 @@
+[{
+  "_id": {
+    "$oid": "654a4f3b0b0fb1a1ed4ae9cf"
+  },
+  "firstname": "D T",
+  "lastname": "Annnnn",
+  "email": "dtan6@gmail.com",
+  "mobile": "123456",
+  "password": "$2b$10$sHG6O2d.Fs9EpPhLYZgwXek1Er7qFtNOqyMRu0gTai24Zl35T1iu6",
+  "role": "admin",
+  "isBlocked": false,
+  "cart": [],
+  "wishlist": [],
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1699368763563"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1703350898930"
+    }
+  },
+  "__v": 0,
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NGE0ZjNiMGIwZmIxYTFlZDRhZTljZiIsImlhdCI6MTcwMzM1MDg5OCwiZXhwIjoxNzAzNjEwMDk4fQ.VjQJ1_i1Po414eOb4TnAz6aCRFEwOfpuA3XZ8qirpe0"
+},{
+  "_id": {
+    "$oid": "656662422b8a5c0ca360085e"
+  },
+  "firstname": "dsa",
+  "lastname": "dsad",
+  "email": "dsad@gmail.com",
+  "mobile": "12345612",
+  "password": "$2b$10$JU4H1ctpuX/A72U.8wjbE.0xOJkgfuCzWMfX8kp2kSYyqikBRsf7y",
+  "role": "user",
+  "isBlocked": false,
+  "cart": [],
+  "wishlist": [],
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1701208642356"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1701208642356"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "65670fc5387640884d693841"
+  },
+  "firstname": "dsadsa",
+  "lastname": "sdadas",
+  "email": "trongluudoan@gmail.com",
+  "mobile": "43213123",
+  "password": "$2b$10$r204qIGKrSAMPpRP25RV0.hQflqdegduAu1oPjMFjxirlESiIrXFe",
+  "role": "user",
+  "isBlocked": false,
+  "cart": [],
+  "wishlist": [],
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1701253061261"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1701253061261"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "65672179f177625fba423cfb"
+  },
+  "firstname": "dsad",
+  "lastname": "dsadasds",
+  "email": "mantrinhat3@gmail.com",
+  "mobile": "3123123213",
+  "password": "$2b$10$UzYmSVrEIyB9K7jMQa4AWOXpwXo36ws1Fz0ckHwPv7yP.JNSeT.Ny",
+  "role": "user",
+  "isBlocked": false,
+  "cart": [],
+  "wishlist": [],
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1701257593561"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1701284515064"
+    }
+  },
+  "__v": 0,
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjcyMTc5ZjE3NzYyNWZiYTQyM2NmYiIsImlhdCI6MTcwMTI4NDUxNSwiZXhwIjoxNzAxNTQzNzE1fQ.M97I3-eN-yxC728rC6qNgC8QBdv7bYvGTj-UDSxwuhw"
+},{
+  "_id": {
+    "$oid": "65678c452f394707eb6d18cb"
+  },
+  "firstname": "dsadsad",
+  "lastname": "dsadsa",
+  "email": "123@gmail.com",
+  "mobile": "3213213",
+  "password": "$2b$10$N1oo/HqJVUZGnf3UtEYOSeAtADJQzv2.Bwi9pl41k873oF3eKhUJe",
+  "role": "admin",
+  "isBlocked": false,
+  "cart": [],
+  "wishlist": [],
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1701284933062"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1701284980864"
+    }
+  },
+  "__v": 0,
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Njc4YzQ1MmYzOTQ3MDdlYjZkMThjYiIsImlhdCI6MTcwMTI4NDk4MCwiZXhwIjoxNzAxNTQ0MTgwfQ.Itau3-fJ2uGcj-6poIRgMeBpPVPgAKK9qrkf82XhC6Q"
+},{
+  "_id": {
+    "$oid": "656793a92f394707eb6d18d6"
+  },
+  "firstname": "dsadaw",
+  "lastname": "dawdasd",
+  "email": "qwe@gmail.com",
+  "mobile": "12321534",
+  "password": "$2b$10$TdvoE0mDN80DAvpEBbUt6.nVwGorxYNjwBxIjnGKOmTK5/LZrdC4e",
+  "role": "user",
+  "isBlocked": false,
+  "cart": [],
+  "wishlist": [
+    {
+      "$oid": "65732fc11f458fcc018882b7"
+    }
+  ],
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1701286825234"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1702048706534"
+    }
+  },
+  "__v": 0,
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Njc5M2E5MmYzOTQ3MDdlYjZkMThkNiIsImlhdCI6MTcwMjA0ODcwNiwiZXhwIjoxNzAyMzA3OTA2fQ.GbZiaZPE9vAh-1YPWNDHrQwqTLF7CaQ3d-8XtQyXs4s"
+},{
+  "_id": {
+    "$oid": "6573350b195aed787e7dd859"
+  },
+  "firstname": "dsad",
+  "lastname": "sadasd",
+  "email": "qwe123@gmail.com",
+  "mobile": "2812312",
+  "password": "$2b$10$5IKY4CXaBUGbO.wo5P7pfe90wFEUBTKJhk56nTd8m.fpk/WURRfa.",
+  "role": "user",
+  "isBlocked": false,
+  "cart": [],
+  "wishlist": [
+    {
+      "$oid": "655a371f1b11bbd7dae1d0c8"
+    },
+    {
+      "$oid": "65736ceac5fc190978be1e4f"
+    },
+    {
+      "$oid": "65736cabc5fc190978be1e49"
+    },
+    {
+      "$oid": "65736c49c5fc190978be1e41"
+    }
+  ],
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1702049035439"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1703099785870"
+    }
+  },
+  "__v": 0,
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NzMzNTBiMTk1YWVkNzg3ZTdkZDg1OSIsImlhdCI6MTcwMjA0OTA2NCwiZXhwIjoxNzAyMzA4MjY0fQ.3GYey_JvzMfmcpG2HX1kwFWBjxgFdu44-TNaDaB-Oj8"
+}]

@@ -1,0 +1,49 @@
+[{
+  "_id": {
+    "$oid": "655a36861b11bbd7dae1d0b8"
+  },
+  "title": "#000000",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1700411014074"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1700411014074"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "655a36931b11bbd7dae1d0bb"
+  },
+  "title": "#9e1a1a",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1700411027205"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1700411027205"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "655a36991b11bbd7dae1d0bd"
+  },
+  "title": "#1ae07a",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1700411033125"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1700411033125"
+    }
+  },
+  "__v": 0
+}]
