@@ -40,9 +40,9 @@ var productSchema = new mongoose.Schema(
     },
     images: [
       {
-        public_id: String,
-        url: String,
-      },
+        type: String,
+        default: 0,
+      }
     ],
     color: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Color' }],
     tags: String,
