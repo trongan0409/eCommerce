@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { getUserProductWishlist } from '../features/users/userSlide';
 import { userId } from '../utils/AxiosConfig';
 import { addToWishlist } from '../features/products/ProductSlice';
+import Card from '../components/Card';
 
 const Wishlist = () => {
 
@@ -20,7 +21,7 @@ const Wishlist = () => {
         await dispatch(getUserProductWishlist(userId));
     }
 
-    const wishlistState = useSelector((state) => state?.auth?.wishlistProduct?.wishlist);
+    const wishlistState = useSelector((state) => state?.auth?.wishlistProducts?.wishlist);
     console.log('check wishlist: ', wishlistState);
 
     const removeFromWishlist = (id) => {
@@ -40,20 +41,8 @@ const Wishlist = () => {
                         <div className='text-center'>Wishlist is Empty</div>
                     }
                     {wishlistState && wishlistState?.map((item, index) => {
-                        console.log(wishlistState);
                         return (
-                            <div className='col-3' key={index}>
-                                <div className='wishlist-card position-relative'>
-                                    <img src='images/cross.svg' onClick={() => removeFromWishlist(item?._id)} className='position-absolute cross' alt='cross' />
-                                    <div className='wishlist-card-image'>
-                                        <img src='images/watch.jpg' className='img-fluid w-100' alt='watch' />
-                                    </div>
-                                    <div className='py-3 px-3'>
-                                        <h5 className='title'>{item?.title}</h5>
-                                        <h6 className='price'>${item?.price}</h6>
-                                    </div>
-                                </div>
-                            </div>
+                            <Card dataProduct={item} grid={3} wishList={true} key={index} />
                         )
                     })}
                 </div>

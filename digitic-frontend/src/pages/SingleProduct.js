@@ -14,6 +14,7 @@ import { useEffect } from 'react';
 import { getAProduct } from '../features/products/ProductSlice';
 import { toast } from 'react-toastify';
 import { addProductToCart, getUserCart } from '../features/users/userSlide';
+import { API_SERVER } from '../utils/AxiosConfig';
 
 const SingleProduct = () => {
 
@@ -56,11 +57,12 @@ const SingleProduct = () => {
                 color,
                 price: productState?.price
             }));
+            dispatch(getUserCart())
             navigate('/cart');
         }
     }
 
-    const props = { width: 595, height: 500, zoomWidth: 500, img: "https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" };
+    const props = { width: 595, height: 500, zoomWidth: 500, };
 
     const copyToClipboard = (text) => {
         console.log('text', text)
@@ -81,14 +83,14 @@ const SingleProduct = () => {
                     <div className='col-6'>
                         <div className='main-product-image'>
                             <div className=''>
-                                <ReactImageZoom {...props} />
+                                <ReactImageZoom {...props} img={`${API_SERVER}/image/${productState?.images[0]}`} />
                             </div>
                         </div>
                         <div className='other-product-images d-flex flex-wrap gap-15'>
                             {productState && productState?.images.map((item, index) => {
                                 return (
                                     <div>
-                                        <img src={item?.url} className='img-fluid' alt='' />
+                                        <img src={`${API_SERVER}/image/${item}`} style={{ height: 100, width: '100%' }} className='img-fluid' alt='' />
                                     </div>
                                 )
                             })}

@@ -96,17 +96,13 @@ export const authSlice = createSlice({
             state.isErr = false;
             state.isSuccess = true;
             state.createdUser = action.payload;
-            if (state.isSuccess === true) {
-                toast.info('User created successfully!');
-            }
+
         }).addCase(registerUser.rejected, (state, action) => {
             state.isLoading = false;
             state.isErr = true;
             state.isSuccess = false;
             state.message = action.error;
-            if (state.isErr === true) {
-                toast.error(action.error);
-            }
+
         }).addCase(loginUser.pending, (state) => {
             state.isLoading = true
         })
@@ -115,18 +111,13 @@ export const authSlice = createSlice({
                 state.isErr = false;
                 state.isSuccess = true;
                 state.user = action.payload;
-                if (state.isSuccess === true) {
-                    localStorage.setItem('token', action.payload.token);
-                    toast.info('User Logged In successfully!');
-                }
+
             }).addCase(loginUser.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isErr = true;
                 state.isSuccess = false;
                 state.message = action.error;
-                if (state.isErr === true) {
-                    toast.error(action.error);
-                }
+
             })
             ///
             .addCase(logoutUser.fulfilled, (state, action) => {
@@ -153,9 +144,7 @@ export const authSlice = createSlice({
                 state.isErr = true;
                 state.isSuccess = false;
                 state.message = action.error;
-                if (state.isErr === true) {
-                    toast.error(action.error);
-                }
+
             }).addCase(addProductToCart.pending, (state) => {
                 state.isLoading = true
             }).addCase(addProductToCart.fulfilled, (state, action) => {
@@ -163,17 +152,13 @@ export const authSlice = createSlice({
                 state.isErr = false;
                 state.isSuccess = true;
                 state.cartProduct = action.payload;
-                if (state.isSuccess === true) {
-                    toast.success('Product added to Cart!')
-                }
+
             }).addCase(addProductToCart.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isErr = true;
                 state.isSuccess = false;
                 state.message = action.error;
-                if (state.isErr === true) {
-                    toast.error(action.error);
-                }
+
             }).addCase(getUserCart.pending, (state) => {
                 state.isLoading = true
             }).addCase(getUserCart.fulfilled, (state, action) => {
@@ -196,17 +181,11 @@ export const authSlice = createSlice({
                 state.isErr = false;
                 state.isSuccess = true;
                 state.deletedCartProduct = action.payload;
-                if (state.isSuccess === true) {
-                    toast.success('Product deleted from Cart successfully!');
-                }
             }).addCase(deleteCartProduct.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isErr = true;
                 state.isSuccess = false;
                 state.message = action.error;
-                if (state.isSuccess === false) {
-                    toast.success('Something went wrong!');
-                }
             }).addCase(updateCartProduct.pending, (state) => {
                 state.isLoading = true
             }).addCase(updateCartProduct.fulfilled, (state, action) => {
@@ -214,17 +193,13 @@ export const authSlice = createSlice({
                 state.isErr = false;
                 state.isSuccess = true;
                 state.updatedCartProduct = action.payload;
-                if (state.isSuccess === true) {
-                    toast.success(`Product's Quantity updated from Cart successfully!`);
-                }
+
             }).addCase(updateCartProduct.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isErr = true;
                 state.isSuccess = false;
                 state.message = action.error;
-                if (state.isSuccess === false) {
-                    toast.success('Something went wrong!');
-                }
+
             }).addCase(createAnOrder.pending, (state) => {
                 state.isLoading = true
             }).addCase(createAnOrder.fulfilled, (state, action) => {
@@ -232,17 +207,13 @@ export const authSlice = createSlice({
                 state.isErr = false;
                 state.isSuccess = true;
                 state.orderedProduct = action.payload;
-                if (state.isSuccess === true) {
-                    toast.success(`Ordered successfully!`);
-                }
+
             }).addCase(createAnOrder.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isErr = true;
                 state.isSuccess = false;
                 state.message = action.error;
-                if (state.isSuccess === false) {
-                    toast.success('Something went wrong!');
-                }
+
             })
     }
 })

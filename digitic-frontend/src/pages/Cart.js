@@ -22,16 +22,14 @@ const Cart = () => {
     useEffect(() => {
         if (productUpdateDetail !== null) {
             dispatch(updateCartProduct({ cartItemId: productUpdateDetail?.cartItemId, quantity: productUpdateDetail?.quantity }));
-            setTimeout(() => {
-                dispatch(getUserCart());
-            }, 200)
+            dispatch(getUserCart());
         }
     }, [dispatch, productUpdateDetail]);
 
     const deteteACartProduct = (id) => {
-        setTimeout(() => {
-            dispatch(deleteCartProduct(id))
-        }, 200)
+        dispatch(deleteCartProduct(id))
+        dispatch(getUserCart());
+
     }
 
     useEffect(() => {

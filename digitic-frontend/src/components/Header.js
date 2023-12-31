@@ -3,7 +3,7 @@ import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { BsSearch } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTokenFromLocalStorage } from '../utils/AxiosConfig';
-import { logoutUser } from '../features/users/userSlide';
+import { getUserCart, logoutUser } from '../features/users/userSlide';
 import { toast } from 'react-toastify';
 
 const Header = () => {
@@ -13,6 +13,7 @@ const Header = () => {
     const dispatch = useDispatch();
 
     const cartState = useSelector(state => state?.auth?.cartProducts);
+
     const handleLogout = () => {
         dispatch(logoutUser())
         toast.info('User Logouted successfully!');
@@ -29,6 +30,12 @@ const Header = () => {
             }
         }
     }, [cartState])
+
+    useEffect(() => {
+        dispatch(getUserCart())
+    }, [])
+
+
 
     return (
         <>

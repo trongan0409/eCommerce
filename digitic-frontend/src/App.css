@@ -370,7 +370,6 @@ footer .input-group-text {
 
 
 .product-card {
-  padding: 15px;
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
@@ -851,8 +850,8 @@ footer .input-group-text {
 }
 
 .other-product-images>div {
-  padding: 20px;
-  width: 48%;
+  padding: 5px;
+  width: calc((100% / 4) - 20px);
   border: 1px solid rgba(0, 0, 0, 0.25);
 }
 

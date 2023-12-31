@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getAllBlogs } from '../features/Blogs/BlogSlide';
 import moment from 'moment';
+import Categories from './Categories';
 
 const Blogs = () => {
 
@@ -29,19 +30,7 @@ const Blogs = () => {
             <Container class1='blog-wrapper home-wrapper-2 py-5'>
                 <div className='row'>
                     <div className='col-3'>
-                        <div className='filter-card mb-3'>
-                            <h3 className='filter-title'>
-                                Find By Categories
-                            </h3>
-                            <div>
-                                <ul className='ps-0'>
-                                    <li>Watch</li>
-                                    <li>Tv</li>
-                                    <li>Camera</li>
-                                    <li>Laptop</li>
-                                </ul>
-                            </div>
-                        </div>
+                        <Categories />
                     </div>
                     <div className='col-9'>
                         <div className='row'>
