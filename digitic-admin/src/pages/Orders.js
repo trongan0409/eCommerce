@@ -39,7 +39,6 @@ const Orders = () => {
     dispatch(getOrders());
   }, []);
   const orderState = useSelector((state) => state.auth.orders);
-  console.log(orderState);
 
   const data1 = [];
   for (let i = 0; i < orderState.length; i++) {
@@ -83,6 +82,7 @@ const Orders = () => {
           </thead>
           <tbody>
             {orderState && orderState.map((item, index) => {
+              console.log(item)
               return (
                 <tr key={index}>
                   <th scope="row">1</th>
@@ -96,10 +96,10 @@ const Orders = () => {
                   <td>{new Date(orderState.createdAt).toLocaleString()}</td>
                   <td>
                     <select className="form-select" aria-label="Default select example">
-                      <option value=''>{item.orderStatus}</option>
-                      <option value="delivering">Delivering</option>
-                      <option value="celivered">Celivered</option>
-                      <option value="canceled">Canceled</option>
+                      <option value='Comfirming'>Comfirming</option>
+                      <option value="Delivering">Delivering</option>
+                      <option value="Celivered">Celivered</option>
+                      <option value="Canceled">Canceled</option>
                     </select>
                   </td>
                   <td>

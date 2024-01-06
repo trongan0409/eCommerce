@@ -47,6 +47,13 @@ const getCart = async () => {
     }
 }
 
+const removeCart = async () => {
+    const response = await axios.delete(`${base_url}user/empty-cart/${userId._id}`, { headers: config });
+    if (response.data) {
+        return response.data;
+    }
+}
+
 const removeProductFromCart = async (id) => {
     const response = await axios.delete(`${base_url}user/delete-product-cart/${userId._id}/${id}`, { headers: config });
     if (response.data) {
@@ -61,8 +68,16 @@ const updateProductFromCart = async (cartDetail) => {
     }
 }
 
-const createOrder = async (orderDetail) => {
-    const response = await axios.post(`${base_url}user/cart/create-order`, { orderDetail, userId }, { headers: config });
+const
+    createOrder = async (orderDetail) => {
+        const response = await axios.post(`${base_url}user/cart/create-order`, { orderDetail, userId }, { headers: config });
+        if (response.data) {
+            return response.data;
+        }
+    }
+
+const getOrders = async () => {
+    const response = await axios.get(`${base_url}user/get-orders/${userId._id}`, { headers: config });
     if (response.data) {
         return response.data;
     }
@@ -74,8 +89,10 @@ export const authService = {
     getUserWishlist,
     addToCart,
     getCart,
+    removeCart,
     removeProductFromCart,
     updateProductFromCart,
     createOrder,
-    logOut
+    logOut,
+    getOrders
 }

@@ -35,7 +35,7 @@ const Card = ({ dataProduct, grid, wishList = false }) => {
                         </button>
                         :
                         <button className='border-0 bg-transparent' onClick={() => { addToWish(dataProduct?._id) }}>
-                            <img src={`../images/wish.svg`} alt='wishlist' />
+                            <img src={`/images/wish.svg`} alt='wishlist' />
                         </button>
                     }
                 </div>
@@ -58,10 +58,10 @@ const Card = ({ dataProduct, grid, wishList = false }) => {
                     <div className='action-bar position-absolute'>
                         <div className='d-flex flex-column gap-15'>
                             <button className='border-0 bg-transparent'>
-                                <img src='../images/prodcompare.svg' alt='compare' />
+                                <img src='/images/prodcompare.svg' alt='compare' />
                             </button>
                             <Link to={'/product/' + dataProduct?._id} className='border-0 bg-transparent'>
-                                <img src='../images/view.svg' alt='view' />
+                                <img src='/images/view.svg' alt='view' />
                             </Link>
                         </div>
                     </div>

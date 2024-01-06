@@ -6,11 +6,13 @@ import { Link } from 'react-router-dom';
 import Container from '../components/Container';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserCart, deleteCartProduct, updateCartProduct } from '../features/users/userSlide';
+import { API_SERVER } from '../utils/AxiosConfig';
+import { isArray } from 'lodash';
 
 const Cart = () => {
 
     const dispatch = useDispatch();
-    const userCartState = useSelector(state => state.auth.cartProducts);
+    const userCartState = useSelector(state => state?.auth?.cartProducts);
 
     const [productUpdateDetail, setProductUpdateDetail] = useState(null);
     const [totalAmount, setTotalAmount] = useState(null);
@@ -34,9 +36,13 @@ const Cart = () => {
 
     useEffect(() => {
         let sum = 0;
-        for (let index = 0; index < userCartState?.length; index++) {
-            sum = sum + (Number(userCartState[index].quantity) * userCartState[index].price);
-            setTotalAmount(sum);
+        if (userCartState) {
+            for (let index = 0; index < userCartState?.length; index++) {
+                sum = sum + (Number(userCartState[index].quantity) * userCartState[index].price);
+                setTotalAmount(sum);
+            }
+        } else {
+            setTotalAmount(sum)
         }
     }, [userCartState])
 
@@ -53,12 +59,12 @@ const Cart = () => {
                             <h4 className='cart-col-3'>Quantity</h4>
                             <h4 className='cart-col-4'>Total</h4>
                         </div>
-                        {userCartState && userCartState?.map((item, index) => {
+                        {userCartState && isArray(userCartState) && userCartState?.map((item, index) => {
                             return (
                                 <div key={index} className='cart-data py-3 mb-2 d-flex justify-content-between align-items-center'>
                                     <div className='cart-col-1 gap-30 d-flex align-items-center'>
                                         <div className='w-25'>
-                                            <img src='../images/watch.jpg' className='img-fluid' alt='product image' />
+                                            <img src={`${API_SERVER}/image/${item.productId.images[0]}`} className='img-fluid' alt='product image' />
                                         </div>
                                         <div className='w-75'>
                                             <p>{item?.productId.title}</p>

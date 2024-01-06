@@ -1,42 +1,84 @@
 const axios = require("axios");
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-// const Razorpay = require('razorpay');
-
-// const instance = new Razorpay({
-//     key_id: 'dsadas',
-//     key_secret: 'dasdas'
-// })
-
-// const checkout = async (req, res) => {
-
-//     const { amount } = req.body;
-
-//     const option = {
-//         amount: amount * 100,
-//         currency: 'USD'
-//     };
-
-//     const order = await instance.orders.create(option);
-
-//     res.json({
-//         success: true,
-//         order
-//     })
-// }
-
-// const paymentVerification = async (req, res) => {
-//     const { razorpayOrderId, razorpayPaymentId } = req.body;
-//     res.json({
-//         razorpayOrderId,
-//         razorpayPaymentId
-//     })
-// }
+const createPaymentByCard = async (req, res) => {
+    try {
+        const { userInfo, product, totalAmount } = req.body;
+        const lineItems = product.map((products) => ({
+            price_data: {
+                currency: 'usd',
+                product_data: {
+                    name: products.product
+                },
+                unit_amount: Math.round(totalAmount * 100),
+            },
+            quantity: products.quantity,
+        }))
+        if (lineItems.length > 0) {
+            stripe
+            const session = await stripe.checkout.sessions.create({
+                payment_method_types: ['card'],
+                line_items: lineItems,
+                mode: 'payment',
+                success_url: 'http://localhost:3000/purchase-order',
+                cancel_url: 'http://localhost:3000/cart'
+            })
+            res.json({ id: session.id })
+        }
+    } catch (error) {
+        console.log(error);
+    }
+};
 
 // Paypal
 
 const { PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET } = process.env;
 const base = "https://api-m.sandbox.paypal.com";
-console.log({ PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET })
+
+const createPaymentByPaypal = async (req, res) => {
+    try {
+        const cart = req.body;
+        console.log(cart)
+        const { jsonResponse, httpStatusCode } = await createOrder(cart);
+        res.status(httpStatusCode).json(jsonResponse);
+    } catch (error) {
+        console.error("Failed to create order:", error);
+        res.status(500).json({ error: "Failed to create order." });
+    }
+}
+
+const createOrder = async (cart) => {
+    const accessToken = await generateAccessToken();
+    const url = `${base}/v2/checkout/orders`;
+    // const lineItems = cart.cartProductState.map((products) => ({
+    //     product_data: {
+    //         name: products.product,
+    //         quantity: products.quantity,
+    //         price: products.price
+    //     }
+    // }))
+    const payload = {
+        intent: "CAPTURE",
+        purchase_units: [
+            {
+                amount: {
+                    currency_code: "USD",
+                    value: cart.totalAmount,
+                },
+                //items: lineItems,
+            },
+        ],
+    };
+    const response = await axios(url, {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+        },
+        method: "POST",
+        body: JSON.stringify(payload),
+    });
+    return handleResponse(response);
+};
 
 const generateAccessToken = async () => {
     try {
@@ -56,65 +98,25 @@ const generateAccessToken = async () => {
         })
         return response.data.access_token;
     } catch (error) {
-        console.log("🚀 ~ file: paymentCtrl.js:62 ~ generateAccessToken ~ error:", error)
         res.status(500).json(error);
-
-    }
-};
-
-const checkout = async (req, res) => {
-    try {
-        const { amount } = req.body;
-        console.log("🚀 ~ file: paymentCtrl.js:68 ~ checkout ~ amount:", typeof amount.toLocaleString('en-US'))
-        // const { jsonResponse, httpStatusCode } = await createOrder(cart);
-        // res.status(httpStatusCode).json(jsonResponse);
-        const accessToken = await generateAccessToken();
-        console.log("🚀 ~ file: paymentCtrl.js:72 ~ checkout ~ accessToken:", accessToken)
-        const url = `${base}/v2/checkout/orders`;
-        console.log("🚀 ~ file: paymentCtrl.js:75 ~ checkout ~ url:", url)
-        const payload = {
-            intent: "CAPTURE",
-            purchase_units: [
-                {
-                    amount: {
-                        currency_code: "USD",
-                        value: amount.toLocaleString('en-US'),
-                    },
-                },
-            ],
-        };
-        // const response = await axios({
-        //     method: "POST",
-        //     url: `${base}/v2/checkout/orders`,
-        //     data: (payload),
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //         Authorization: `Bearer ${accessToken}`,
-        //     },
-        // })
-
-
-        console.log("🚀 ~ file: paymentCtrl.js:100 ~ checkout ~ response.data:", response)
-        return handleResponse(response.data);
-    } catch (error) {
-        console.log("🚀 ~ file: paymentCtrl.js:98 ~ checkout ~ error:", error.message)
-        res.status(500).json(error);
-
     }
 };
 
 async function handleResponse(response) {
     try {
+        const jsonResponse = await response.json();
         return {
-            response,
-            // httpStatusCode: response.status,
+            jsonResponse,
+            httpStatusCode: response.status,
         };
     } catch (err) {
-        throw new Error(err);
+        const errorMessage = await response.text();
+        throw new Error(errorMessage);
     }
 }
 
+
 module.exports = {
-    checkout,
-    // paymentVerification
+    createPaymentByCard,
+    createPaymentByPaypal
 }

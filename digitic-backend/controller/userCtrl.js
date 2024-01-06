@@ -387,31 +387,41 @@ const updateProductQuantity = asyncHandler(async (req, res) => {
 })
 
 const createOrder = asyncHandler(async (req, res) => {
-  const { shippingInfo, orderItems, totalPrice, totalPriceAfterDiscount } = req.body.orderDetail;
+  console.log(req.body.orderDetail);
+  const { shippingInfo, orderItems, totalPrice, totalPriceAfterDiscount, paymentInfo } = req.body.orderDetail;
   const { _id } = req.body.userId;
   try {
     const order = await Order.create({
-      shippingInfo,
+      shippingInfo: {
+        address: shippingInfo.address,
+        addressDetail: shippingInfo.addressDetail,
+        country: shippingInfo.country,
+        firstname: shippingInfo.firstName,
+        lastname: shippingInfo.lastName,
+        pincode: shippingInfo.zipCode,
+      },
       orderItems,
       totalPrice,
       totalPriceAfterDiscount,
-      user: _id
+      user: _id,
+      paymentInfo
     });
     res.json({
       order,
       success: true
     })
   } catch (error) {
-    throw new Error(error)
+    console.log(error)
+    throw new Error(error);
   }
 })
 
 const emptyCart = asyncHandler(async (req, res) => {
-  const { _id } = req.user;
-  validateMongoDbId(_id);
+  const { id } = req.params;
+  validateMongoDbId(id);
   try {
-    const user = await User.findOne({ _id });
-    const cart = await Cart.findOneAndRemove({ orderby: user._id });
+    const user = await User.findOne({ id });
+    const cart = await Cart.findOneAndRemove({ orderby: user.id });
     res.json(cart);
   } catch (error) {
     throw new Error(error);
@@ -486,12 +496,12 @@ const applyCoupon = asyncHandler(async (req, res) => {
 // });
 
 const getOrders = asyncHandler(async (req, res) => {
-  const { _id } = req.user;
-  validateMongoDbId(_id);
+  const { id } = req.params;
+  validateMongoDbId(id);
   try {
-    const userorders = await Order.findOne({ orderby: _id })
-      .populate("products.product")
-      .populate("orderby")
+    const userorders = await Order.find({ user: id })
+      .populate("orderItems")
+      .populate("shippingInfo")
       .exec();
     res.json(userorders);
   } catch (error) {

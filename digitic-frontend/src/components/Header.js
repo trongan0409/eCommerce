@@ -11,8 +11,8 @@ const Header = () => {
     const [total, setTotal] = useState(null);
     const { user } = useSelector(state => state.auth)
     const dispatch = useDispatch();
-
     const cartState = useSelector(state => state?.auth?.cartProducts);
+
 
     const handleLogout = () => {
         dispatch(logoutUser())
@@ -35,6 +35,9 @@ const Header = () => {
         dispatch(getUserCart())
     }, [])
 
+    const onSearchProduct = (value) => {
+        navigate(`/product/search-result/${value}`)
+    }
 
 
     return (
@@ -65,7 +68,14 @@ const Header = () => {
                                     className="form-control py-2"
                                     placeholder="Search product here..."
                                     aria-label="Search product here..."
-                                    aria-describedby="basic-addon2" />
+                                    aria-describedby="basic-addon2"
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter') {
+                                            onSearchProduct(e.target.value)
+
+                                        }
+                                    }}
+                                />
                                 <span className="input-group-text py-3" id="basic-addon2">
                                     <BsSearch className='fs-6' />
                                 </span>
@@ -117,7 +127,7 @@ const Header = () => {
                                         <img src='../images/cart.svg' alt='cart' />
                                         <div className='d-flex flex-column gap-10'>
                                             <span className='badge bg-white text-dark mt-2'>{cartState ? cartState?.length : 0}</span>
-                                            <p className='bm-0'>$ {total ? total : 0}</p>
+                                            {/* <p className='bm-0'>$ {total ? total : 0}</p> */}
                                         </div>
                                     </Link>
                                 </div>

@@ -49,6 +49,14 @@ export const getUserCart = createAsyncThunk('user/cart/get', async (thunkAPI) =>
     }
 })
 
+export const deleteUserCart = createAsyncThunk('user/cart/delete', async (thunkAPI) => {
+    try {
+        return await authService.removeCart();
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error)
+    }
+})
+
 export const deleteCartProduct = createAsyncThunk('user/cart/product/delete', async (id, thunkAPI) => {
     try {
         return await authService.removeProductFromCart(id);
@@ -68,6 +76,14 @@ export const updateCartProduct = createAsyncThunk('user/cart/product/update', as
 export const createAnOrder = createAsyncThunk('user/cart/create-order', async (orderDetail, thunkAPI) => {
     try {
         return await authService.createOrder(orderDetail);
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error)
+    }
+})
+
+export const getOrdersUser = createAsyncThunk('user/get-orders', async (thunkAPI) => {
+    try {
+        return await authService.getOrders();
     } catch (error) {
         return thunkAPI.rejectWithValue(error)
     }
@@ -174,6 +190,21 @@ export const authSlice = createSlice({
                 if (state.isErr === true) {
                     toast.error(action.error);
                 }
+            }).addCase(deleteUserCart.pending, (state) => {
+                state.isLoading = true
+            }).addCase(deleteUserCart.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isErr = false;
+                state.isSuccess = true;
+                state.cartProducts = action.payload;
+            }).addCase(deleteUserCart.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isErr = true;
+                state.isSuccess = false;
+                state.message = action.error;
+                if (state.isErr === true) {
+                    toast.error(action.error);
+                }
             }).addCase(deleteCartProduct.pending, (state) => {
                 state.isLoading = true
             }).addCase(deleteCartProduct.fulfilled, (state, action) => {
@@ -207,13 +238,23 @@ export const authSlice = createSlice({
                 state.isErr = false;
                 state.isSuccess = true;
                 state.orderedProduct = action.payload;
-
             }).addCase(createAnOrder.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isErr = true;
                 state.isSuccess = false;
                 state.message = action.error;
-
+            }).addCase(getOrdersUser.pending, (state) => {
+                state.isLoading = true
+            }).addCase(getOrdersUser.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isErr = false;
+                state.isSuccess = true;
+                state.listOrders = action.payload;
+            }).addCase(getOrdersUser.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isErr = true;
+                state.isSuccess = false;
+                state.message = action.error;
             })
     }
 })

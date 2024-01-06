@@ -1,3 +1,6 @@
+/* eslint-disable no-script-url */
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable no-use-before-define */
 import React, { useState } from 'react';
 import BreadCrumb from '../components/BreadCrumb';
 import Meta from '../components/Meta';
@@ -31,7 +34,6 @@ const SingleProduct = () => {
 
     useEffect(() => {
         dispatch(getAProduct(getProductId));
-        dispatch(getUserCart())
     }, [])
 
     useEffect(() => {
@@ -109,29 +111,29 @@ const SingleProduct = () => {
                                 </div>
                             </div>
                             <div className='py-3'>
-                                <div className='d-flex gap-10 align-items-center my-2'>
+                                {/* <div className='d-flex gap-10 align-items-center my-2'>
                                     <h6>Type: </h6><p className='product-data'>zcxzcxz</p>
-                                </div>
+                                </div> */}
                                 <div className='d-flex gap-10 align-items-center my-2'>
                                     <h6>Brand: </h6><p className='product-data'>{productState?.brand}</p>
                                 </div>
                                 <div className='d-flex gap-10 align-items-center my-2'>
                                     <h6>Category: </h6><p className='product-data'>{productState?.category}</p>
                                 </div>
-                                <div className='d-flex gap-10 align-items-center my-2'>
+                                {/* <div className='d-flex gap-10 align-items-center my-2'>
                                     <h6>Tags: </h6><p className='product-data'>{productState?.tags}</p>
-                                </div>
+                                </div> */}
                                 <div className='d-flex gap-10 align-items-center my-2'>
                                     <h6>Availability: </h6><p className='product-data'>123 In Stock</p>
                                 </div>
-                                <div className='d-flex gap-10 align-items-center my-2'>
+                                {/* <div className='d-flex gap-10 align-items-center my-2'>
                                     <h6>Size: </h6>
                                     <div className='d-flex gap-15'>
                                         <span className='border border-1 bg-white text-dark border-secondary px-3 py-1'>S</span>
                                         <span className='border border-1 bg-white text-dark border-secondary px-3 py-1'>M</span>
                                         <span className='border border-1 bg-white text-dark border-secondary px-3 py-1'>L</span>
                                     </div>
-                                </div>
+                                </div> */}
                                 {alreadyAdded === false &&
                                     <>
                                         <div className='d-flex gap-10 align-items-center my-2'>
@@ -175,10 +177,10 @@ const SingleProduct = () => {
                                         <a href=''><AiOutlineHeart className='fs-3 me-2' />Add to Wishlist</a>
                                     </div>
                                 </div>
-                                <div className='d-flex gap-10 flex-column my-3'>
+                                {/* <div className='d-flex gap-10 flex-column my-3'>
                                     <h6>Shipping & Returns: </h6>
                                     <p className='product-data'>English texts for beginners to practice reading and comprehension online and for free.</p>
-                                </div>
+                                </div> */}
                                 <div className='d-flex gap-10 align-items-center mt-3'>
                                     <h6>Product Link: </h6>
                                     <a href='javascript:void(0);'

@@ -22,15 +22,11 @@ var orderSchema = new mongoose.Schema(
         type: String,
         required: true
       },
-      city: {
+      country: {
         type: String,
         required: true
       },
-      state: {
-        type: String,
-        required: true
-      },
-      other: {
+      addressDetail: {
         type: String,
         required: true
       },

@@ -14,11 +14,14 @@ import ProductTag from './ProductTag';
 import FilterBy from './FilterBy';
 import Categories from './Categories';
 import _ from 'lodash';
+import { useParams } from 'react-router-dom';
+import { Empty, Flex } from 'antd';
 
-const OurStore = () => {
-
+const ResultSearchProduct = () => {
+    const { value: valueSearch } = useParams()
 
     const [productList, setProductList] = useState([]);
+    const [productListState, setProductListState] = useState([]);
     const [grid, setGrid] = useState(4);
 
     const productState = useSelector((state) => state.product.product);
@@ -26,10 +29,12 @@ const OurStore = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (productState) {
-            setProductList(productState)
+        if (productState && valueSearch) {
+            const result = productState.filter(e => e.title.includes(valueSearch))
+            setProductListState(result)
+            setProductList(result)
         }
-    }, [productState]);
+    }, [productState, valueSearch]);
     useEffect(() => {
         getProducts();
     }, []);
@@ -38,34 +43,34 @@ const OurStore = () => {
         let sort_result
         switch (value) {
             case "title-ascending":
-                sort_result = _.orderBy(productState, ['title'],
+                sort_result = _.orderBy(productList, ['title'],
                     ['asc']);
-                setProductList(sort_result)
+                setProductListState(sort_result)
                 break;
             case "title-descending":
-                sort_result = _.orderBy(productState, ['title'],
+                sort_result = _.orderBy(productList, ['title'],
                     ['desc']);
-                setProductList(sort_result)
+                setProductListState(sort_result)
                 break;
             case "best-selling":
-                sort_result = _.orderBy(productState, ['createdAt'],
+                sort_result = _.orderBy(productList, ['createdAt'],
                     ['desc']);
-                setProductList(sort_result)
+                setProductListState(sort_result)
                 break;
             case "price-ascending":
-                sort_result = _.orderBy(productState, ['price'],
+                sort_result = _.orderBy(productList, ['price'],
                     ['asc']);
-                setProductList(sort_result)
+                setProductListState(sort_result)
                 break;
             case "price-descending":
-                sort_result = _.orderBy(productState, ['price'],
+                sort_result = _.orderBy(productList, ['price'],
                     ['desc']);
-                setProductList(sort_result)
+                setProductListState(sort_result)
                 break;
             default:
-                setProductList(productState);
+                setProductListState(productList);
         }
-    }, [productState])
+    }, [productList])
 
     const getProducts = async () => {
         await dispatch(getAllProducts());
@@ -87,7 +92,14 @@ const OurStore = () => {
                         <SortOrder setGrid={setGrid} onOrderCallback={sortOrderProduct} />
                         <div className='products-list pb-5'>
                             <div className='d-flex gap-10 flex-wrap'>
-                                <ProductCard data={productList} grid={grid} />
+                                {productList.length === 0 ?
+                                    <Flex align='center' style={{ width: '100%' }} justify='center'>
+
+                                        <Empty />
+                                    </Flex>
+                                    :
+                                    <ProductCard data={productList} grid={grid} />
+                                }
                             </div>
                         </div>
                     </div>
@@ -97,4 +109,4 @@ const OurStore = () => {
     )
 }
 
-export default OurStore;
+export default ResultSearchProduct;

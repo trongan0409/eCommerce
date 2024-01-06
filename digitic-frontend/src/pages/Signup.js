@@ -7,6 +7,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../features/users/userSlide';
+import { useNavigate } from 'react-router-dom';
 
 const signUpSchema = yup.object({
     firstname: yup.string().required('First name is Required'),
@@ -19,6 +20,7 @@ const signUpSchema = yup.object({
 const Signup = () => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const formik = useFormik({
         initialValues: {
@@ -29,8 +31,9 @@ const Signup = () => {
             password: ''
         },
         validationSchema: signUpSchema,
-        onSubmit: values => {
-            dispatch(registerUser(values));
+        onSubmit: async (values) => {
+            await dispatch(registerUser(values));
+            navigate('/login');
         },
     });
 

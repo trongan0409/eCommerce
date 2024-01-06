@@ -1,75 +1,49 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
-import { useFormik } from "formik";
-import * as yup from "yup";
 import axios from "axios";
-import { config, userId } from "../utils/AxiosConfig";
-import { createAnOrder } from "../features/users/userSlide";
+import { API_SERVER, base_url, config, userId } from "../utils/AxiosConfig";
+import { createAnOrder, deleteUserCart } from "../features/users/userSlide";
 import { Button, Checkbox, Flex, Form, Tabs, Typography } from "antd";
 import CreditCart from "./CreditCart";
-import PayPalForm from "./PayPalForm";
 import InformationForm from "./InformationForm";
 import { LogosPaypal } from "../icons";
 import CryptoFrom from "./CryptoFrom";
-
-const { Title } = Typography;
-const { PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET, PORT = 8888 } = process.env;
-const base = "https://api-m.sandbox.paypal.com";
-
-const shippingSchema = yup.object({
-  firstname: yup.string().required("First Name is Required!"),
-  lastname: yup.string().required("Last Name is Required!"),
-  address: yup.string().required("Address Details are Required!"),
-  state: yup.string().required("State is Required!"),
-  city: yup.string().required("City is Required!"),
-  country: yup.string().required("Country is Required!"),
-  pincode: yup.number().required("Pincode is Required!"),
-});
+import { loadStripe } from '@stripe/stripe-js';
 
 const Checkout = () => {
   const [formPlaceOrder] = Form.useForm();
   const [totalAmount, setTotalAmount] = useState(null);
-  const [shippingInfo, setShippingInfo] = useState(null);
   const [paymentInfo, setPaymentInfo] = useState({
-    razorpayPaymentId: "",
-    razorpayOrderId: "",
+    jsonResponse: "No response",
+    httpStatusCode: "Payment on delivery",
   });
   const [cartProductState, setCartProductState] = useState([]);
 
-  const [paymentMethod, setPaymentMethod] = useState([]);
+  const [paymentMethod, setPaymentMethod] = useState('1');
+  const [hiddenPlaceOrder, setHinddenPlaceOrder] = useState(false);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const cartState = useSelector((state) => state.auth.cartProducts);
+  console.log(cartState)
 
   useEffect(() => {
     let sum = 0;
-    for (let index = 0; index < cartState?.length; index++) {
-      sum = sum + Number(cartState[index].quantity) * cartState[index].price;
-      setTotalAmount(sum);
-    }
+    cartState?.map((item) => {
+      console.log('object', item)
+      sum = Number(item?.quantity) * item?.price;
+    })
+    // console.log(sum)
+    // for (let index = 0; index < cartState?.length; index++) {
+    //   sum = sum + Number(cartState[index]?.quantity) * cartState[index]?.price;
+    // }
+    setTotalAmount(sum);
   }, [cartState]);
-
-  const formik = useFormik({
-    initialValues: {
-      firstname: "",
-      lastname: "",
-      address: "",
-      state: "",
-      city: "",
-      country: "",
-      pincode: "",
-      other: "",
-    },
-    validationSchema: shippingSchema,
-    onSubmit: async (values) => {
-      await setShippingInfo(values);
-      //checkOutHandler();
-    },
-  });
 
   useEffect(() => {
     let items = [];
@@ -84,29 +58,71 @@ const Checkout = () => {
     setCartProductState(items);
   }, [cartState]);
 
-  // const checkOutHandler = async () => {
-  //   if(paymentMethod === '1') {
-  //     setPaymentInfo()
-  //   }
-  //   dispatch(
-  //     createAnOrder({
-  //       totalPrice: totalAmount,
-  //       totalPriceAfterDiscount: totalAmount,
-  //       orderItems: cartProductState,
-  //       shippingInfo,
-  //     })
-  //   );
-  // };
+  const paymentOnDelivery = async (value) => {
+    const response = await dispatch(
+      createAnOrder({
+        totalPrice: totalAmount,
+        totalPriceAfterDiscount: totalAmount,
+        orderItems: cartProductState,
+        shippingInfo: value,
+        paymentInfo,
+      })
+    );
+    if (response) {
+      dispatch(deleteUserCart());
+
+      navigate('/purchase-order');
+    }
+  }
+
+  const paymentByCard = async (value) => {
+    setPaymentInfo({
+      jsonResponse: 'Payment by Credit Card',
+      httpStatusCode: 'Success'
+    });
+    await dispatch(
+      createAnOrder({
+        totalPrice: totalAmount,
+        totalPriceAfterDiscount: totalAmount,
+        orderItems: cartProductState,
+        shippingInfo: value,
+        paymentInfo,
+      })
+    );
+    const stripe = await loadStripe('pk_test_51OTqMmIwXVtBHszWKTAlIVkRgDXV8ijtiwDx5pA3LKrEhWoci0VpT2WDw6yA6do7aYj5pjsLiweuzvegWYkoq3EF00NUsGEINS');
+    const headers = {
+      "Content-Type": "application/json"
+    }
+    const { data: session } = await axios.post(`${base_url}user/order/checkout-by-card`, { totalAmount: totalAmount, product: cartProductState }, { headers: headers })
+    const result = stripe.redirectToCheckout({
+      sessionId: session.id
+    })
+    if (result.error) {
+      return console.log(result.error)
+    }
+  }
+
+  const paymentByPaypal = async (info) => {
+    setPaymentInfo({
+      jsonResponse: 'Payment by Paypal',
+      httpStatusCode: 'success'
+    });
+    const response = await axios.post(`${base_url}user/order/checkout-by-paypal`, { shippingInfo: info, cartProductState, totalAmount }, { headers: config });
+    console.log(response);
+  }
 
   const onChange = (key) => {
-    console.log(key);
+    setHinddenPlaceOrder(false)
     setPaymentMethod(key);
+    if (key === '3') return setHinddenPlaceOrder(true)
   };
 
   const onPlaceOrder = React.useCallback((type, value) => {
-    console.log("🚀 ~ file: Checkout.js:176 ~ onPlaceOrder ~ value:", value);
-    console.log("🚀 ~ file: Checkout.js:176 ~ onPlaceOrder ~ type:", type);
-  }, []);
+    if (paymentMethod === '1') paymentOnDelivery(value);
+    if (paymentMethod === '2') paymentByCard(value);
+    if (paymentMethod === '3') paymentByPaypal(value);
+    // if (paymentMethod === '4') paymentByPaypal(value);
+  }, [paymentMethod]);
 
   const items = [
     {
@@ -129,6 +145,7 @@ const Checkout = () => {
             style={{ backgroundColor: "#ffc447", padding: "0 100px" }}
             type='primary'
             icon={<LogosPaypal />}
+            onClick={() => formPlaceOrder.submit()}
           >
             PayPal
           </Button>
@@ -171,7 +188,7 @@ const Checkout = () => {
                 <p className='user-details total'>Doan Trong An(doanan114@gmail.com)</p>
                 <h4 className='mb-3'>Shipping Address</h4>
                 <InformationForm form={formPlaceOrder} onPlaceOrder={onPlaceOrder} />
-                <h5 className='mb-3'>Payment on delivery</h5>
+                <h5 className='mb-3'>Payment Gateway</h5>
                 {/*  */}
                 <Tabs
                   defaultActiveKey='1'
@@ -189,9 +206,11 @@ const Checkout = () => {
                     <Link to='/product' className='button'>
                       Continue to Shopping
                     </Link>
-                    <button className='button' onClick={() => formPlaceOrder.submit()}>
-                      Place Order
-                    </button>
+                    {!hiddenPlaceOrder &&
+                      <button type="submit" className='button' onClick={() => formPlaceOrder.submit()}>
+                        Place Order
+                      </button>
+                    }
                   </div>
                 </div>
               </div>
@@ -215,14 +234,17 @@ const Checkout = () => {
                             {item?.quantity}
                           </span>
                           <img
-                            src='../images/watch.jpg'
+                            src={`${API_SERVER}/image/${item.productId.images[0]}`}
                             className='img-fluid'
                             alt='product'
                           />
                         </div>
                         <div className=''>
                           <h5 className='total-price'>{item?.productId?.title}</h5>
-                          <p className='total-price'>{item?.color?.title}</p>
+                          {/* <p className='total-price'>{item?.color?.title}</p> */}
+                          <ul className='colors ps-0 mb-[7px]'>
+                            <li style={{ backgroundColor: item?.color?.title }}></li>
+                          </ul>
                         </div>
                       </div>
                       <div className=''>
@@ -238,15 +260,15 @@ const Checkout = () => {
                 <p className='total-price'>${totalAmount ? totalAmount : 0}</p>
               </div>
             </div>
-            <div className='border-bottom py-4'>
+            {/* <div className='border-bottom py-4'>
               <div className='d-flex justify-content-between align-items-center'>
                 <p className='mb-0 total'>Shipping</p>
                 <p className='mb-0 total-price'>$3</p>
               </div>
-            </div>
+            </div> */}
             <div className='d-flex justify-content-between align-items-center py-4'>
               <h4 className='total'>Total</h4>
-              <h5 className='total-price'>${totalAmount ? totalAmount + 3 : 0}</h5>
+              <h5 className='total-price'>${totalAmount ? totalAmount : 0}</h5>
             </div>
           </div>
         </div>
