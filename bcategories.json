@@ -1,0 +1,33 @@
+[{
+  "_id": {
+    "$oid": "6572f5fe195aed787e7dd770"
+  },
+  "title": "Blog Category 1",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1702032895763"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1702032895763"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6572f604195aed787e7dd772"
+  },
+  "title": "Blog Category 2",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1702032900843"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1702032900843"
+    }
+  },
+  "__v": 0
+}]
