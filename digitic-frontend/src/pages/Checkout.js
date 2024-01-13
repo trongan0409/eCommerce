@@ -203,7 +203,7 @@ const Checkout = () => {
           <div className='col-7'>
             <div className='checkout-left-data'>
               <div className='website-name'>
-                <h3>Dev Corner</h3>
+                <h3>Ecommerce</h3>
                 <nav style={{ "--bs-breadcrumb-divider": ">" }} aria-label='breadcrumb'>
                   <ol className='breadcrumb'>
                     <li className='breadcrumb-item'>

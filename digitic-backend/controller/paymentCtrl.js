@@ -40,8 +40,8 @@ const createPaymentByCard = async (req, res) => {
                 payment_method_types: ['card'],
                 line_items: lineItems,
                 mode: 'payment',
-                success_url: 'http://localhost:3000/purchase-order/card',
-                cancel_url: 'http://localhost:3000/cart'
+                success_url: 'https://d204-2402-9d80-448-f491-b1d5-6106-262a-2120.ngrok-free.app/purchase-order/card',
+                cancel_url: 'https://d204-2402-9d80-448-f491-b1d5-6106-262a-2120.ngrok-free.app/cart'
             })
             res.json({ id: session.id })
         }
@@ -73,8 +73,8 @@ const createPaymentByPaypal = async (req, res) => {
                 payment_method: 'paypal',
             },
             redirect_urls: {
-                return_url: 'http://localhost:3000/purchase-order/paypal',
-                cancel_url: 'http://localhost:3000/cart',
+                return_url: 'https://d204-2402-9d80-448-f491-b1d5-6106-262a-2120.ngrok-free.app/purchase-order/paypal',
+                cancel_url: 'https://d204-2402-9d80-448-f491-b1d5-6106-262a-2120.ngrok-free.app/cart',
             },
             transactions: [
                 {
